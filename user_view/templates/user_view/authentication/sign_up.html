@@ -1,0 +1,81 @@
+{% extends 'user_view/parts/base.html' %}
+{% load static %}
+
+{% block nav_link %}
+<li><a class="md:font-bold text-xl menu hover:cursor-pointer" href="{% url 'index' %}">Home</a></li>
+{% endblock %}
+{% block link %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+
+{% block list %}
+<li><a href="{% url 'index' %}" class="hover:cursor-pointer font-bold text-xl">Home</a></li>
+{% endblock %}
+
+{% block content %}
+    <div class="container max-w-full fixed h-screen flex top-0 flex-col justify-center bg-slate-100">
+        <div class="flex justify-center">
+            <div class="container w-10/12 md:w-2/5 bg-white border rounded-xl shadow-xl">
+                <h1 class="font-bold text-center text-xl md:text-2xl mt-4">Sign Up</h1>
+                <form id="form" method="POST" class="flex flex-col text-center mt-5">
+                <h1 id="notif" class="text-red-400 mb-3 text-sm">{{notif}}</h1>
+                    {% csrf_token %}
+                    <div>
+                        <div class="max-w-full flex justify-center">
+                            <div class="w-52 md:w-64 pl-2">
+                                <h1 class="text-start font-bold">Email</h1>
+                            </div>
+                        </div>
+                        <input required name="email" id="email" type="email"
+                        class="w-48 md:w-64 h-9 border border-black rounded-md pl-1 ">
+                    </div>
+                    <div class="mt-5">
+                        <div class="max-w-full flex justify-center">
+                            <div class="w-52 md:w-64 pl-2">
+                                <h1 class="text-start font-bold">Password</h1>
+                            </div>
+                        </div>
+                        <input required name="password" id="password" type="password"
+                        class="md:w-64 h-9 w-48 border border-black rounded-md pl-1">
+                    </div>
+                    <div class="mt-5">
+                        <div class="max-w-full flex justify-center">
+                            <div class="w-52 md:w-64 pl-2">
+                                <h1 class="text-start font-bold">Confirm Password</h1>
+                            </div>
+                        </div>
+                        <input required name="confirm-password" id="confirm-password" type="password"
+                        class="md:w-64 h-9 w-48 border border-black rounded-md pl-1">
+                    </div>
+                    <div class="container max-w-full items-center mt-5 mb-5">
+                        <button class="bg-black w-32 h-8 font-bold rounded-md text-white">Sign In</button>
+                    </div>
+                    <h1 class="text-sm mb-7">Do you have an account? <a href="{% url 'sign-in' %}" class="font-bold hover:cursor-pointer">Sign In</a></h1>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+<script>
+    const form = document.querySelector('#form')
+    const password = document.querySelector('#password')
+    const confirm_password = document.querySelector('#confirm-password')
+    const notif = document.querySelector('#notif')
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault()
+
+        if (String(password.value).length >= 8){
+            if (password.value == confirm_password.value){
+                form.submit()
+            }else{
+                notif.textContent = 'Password and Confirm Password must match'
+            }
+        }else{
+            notif.textContent = 'Password must have 8 or more letters'
+        }
+    })
+</script>
+{% endblock %}

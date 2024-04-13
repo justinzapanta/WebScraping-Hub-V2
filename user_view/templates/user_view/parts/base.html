@@ -19,7 +19,9 @@
         <a id="menu" class="md:hidden menu-icon text-black absolute top-0 right-0 mt-2 mr-4"><i class="fas fa-regular fa-bars fa-2x"></i></a>
         <nav class="md:block hidden pr-5 pt-1">
             <ul>
-                <li><a class="md:font-bold text-xl menu hover:cursor-pointer" href="{% url 'sign-in' %}">Sign In</a></li>
+                {% block nav_link %}
+                    <li><a class="md:font-bold text-xl menu hover:cursor-pointer" href="{% url 'sign-in' %}">Sign In</a></li>
+                {% endblock %}
             </ul>
         </nav>
     </header>
@@ -40,16 +42,16 @@
     </div>
 </body>
     {% block script %}
-    <script>
-        const mobile_menu = document.querySelector('#mobile-menu')
+        <script>
+            const mobile_menu = document.querySelector('#mobile-menu')
 
-        function close_menu(){
-            mobile_menu.style.display = 'none'
-        }
+            function close_menu(){
+                mobile_menu.style.display = 'none'
+            }
 
-        document.querySelector('#menu').addEventListener('click', () => {
-            mobile_menu.style.display = 'block'
-        })
-    </script>
+            document.querySelector('#menu').addEventListener('click', () => {
+                mobile_menu.style.display = 'block'
+            })
+        </script>
     {% endblock %}
 </html>
