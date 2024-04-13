@@ -1,0 +1,85 @@
+{% extends 'user_view/parts/base.html' %}
+{% load static %}
+
+{% block link %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container max-w-full relative flex justify-end mt-4 ">
+        <h1 class="absolute top-3 md:top-14 left-5 text-xl font-bold md:text-4xl">Welcom To</h1>
+        <h1 class="absolute top-9 md:top-24 left-5 text-md font-bold md:text-4xl"">WebScraping Hub</h1>
+        <img src="{% static 'img/index-img1.png' %}" class="mt-7 w-9/12 md:w-2/4" alt="image">
+    </div>
+    <div class="text-center mt-4 container max-w-full md:absolute md:top-56">
+        <div class="container max-w-full md:justify-start justify-center md:max-w-none flex pl-5">
+            <div class="text-start">
+                <h1 class="font-bold text-lg md:text-2xl w-72 md:w-auto">Turn Any Website into Your Data Source</h1>
+                <h1 class="font-bold text-md md:text-xl text-sm md:w-11/12 w-72 mt-2 text-ellipsis mb-5">Effortlessly extract valuable insights with our user-friendly web scraping tool </h1>
+            </div>
+        </div>
+        <div class="mt-2 md:mt-9 md:text-start md:pl-44">
+            <a href="{% url 'sign-in' %}" class="hover:cursor-pointer mr-2 bg-slate-950 text-white rounded-3xl md:text-xl md:py-2 md:px-14 py-2 px-10">Sign In</a>
+            <a href="#pricing" class="hover:cursor-pointer text-slate-950 font-bold rounded-2xl md:text-xl md:py-3 md:px-16 py-2 px-10">Pricing</a>
+        </div>
+    </div>
+
+    <div id="more-info" class="container max-w-full mt-10 md:mt-0 pt-3 bg-slate-50">
+        <div id="more-info">
+            <div class="pl-2">
+            <h1 class="font-bold text-xl ml-1 w-56 md:w-auto md:text-2xl">Unleash the Power of Web Data</h1>
+            </div>
+            <p class="text-sm mt-2 ml-1 px-2 md:text-xl md:w-10/12"> 
+                Extract valuable data from any website with ease. This web scraping tool caters to both 
+                beginners and experienced users, offering granular control over data extraction and element selection.
+            </p>
+        </div>
+        <h1 id="pricing" class="mt-10 font-bold text-xl ml-3 md:text-2xl">Pricing</h1>
+        <div id="pricing-container" class="mt-4 container max-w-full flex flex-col md:flex-row md:justify-center pb-5 items-center">
+            <!--Free-->
+            <div id="pricing-card" class="mt-2 md:mt-0 rounded-3xl border border-gray-300 shadow-xl w-72 md:w-80 bg-white">
+                <h1 class="font-bold text-xl mb-2 text-center mt-4">7 days free trial</h1>
+                <hr>
+                <div class="pl-6 mt-4 md:text-xl">
+                    <p class="my-1 md:my-3"> <strong>Price:</strong> Free</p>
+                    <p class="my-1 md:my-3"> <strong>API Access:</strong> No</p>
+                    <p class="my-1 md:my-3"> <strong>Scrape per Month:</strong> 10 </p>
+                    <p class="my-1 md:my-3"> <strong>Export Option:</strong> Google Sheet</p>
+                </div>
+                <div class="container max-w-full mt-5 flex justify-center md:mt-8 mb-6">
+                    <a class="hover:cursor-pointer justify-center bg-slate-950 px-6 py-2 md:px-10 rounded-lg text-white font-bold ">Select Plan</a>
+                </div>
+            </div>
+
+            <!--Monthly-->
+            <div id="pricing-card" class="md:ml-8 mt-7 md:mt-0 md:mr-8 rounded-3xl border border-gray-300 shadow-xl w-72 md:w-80 bg-white">
+                <h1 class="font-bold text-xl mb-2 text-center mt-4">Monthly</h1>
+                <hr>
+                <div class="pl-6 mt-4 md:text-xl">
+                    <p class="my-1 md:my-3"> <strong>Price:</strong> ₱300</p>
+                    <p class="my-1 md:my-3"> <strong>API Access:</strong> Yes</p>
+                    <p class="my-1 md:my-3"> <strong>Scrape per Month:</strong> Unlimited </p>
+                    <p class="my-1 md:my-3"> <strong>Export Option:</strong> All</p>
+                </div>
+                <div class="container max-w-full mt-5 flex justify-center md:mt-8 mb-6">
+                    <a class="hover:cursor-pointer justify-center bg-slate-950 px-6 py-2 md:px-10 rounded-lg text-white font-bold ">Select Plan</a>
+                </div>
+            </div>
+
+            <!--Yearly-->
+            <div id="pricing-card" class="rounded-3xl border border-gray-300 shadow-xl w-72 md:w-80 bg-white mt-7 md:mt-0">
+                <h1 class="font-bold text-xl mb-2 text-center mt-4">Yearly</h1>
+                <hr>
+                <div class="pl-6 mt-4 md:text-xl">
+                    <p class="my-1 md:my-3"> <strong>Price: </strong>₱2500</p>
+                    <p class="my-1 md:my-3"> <strong>API Access:</strong> YES</p>
+                    <p class="my-1 md:my-3"> <strong>Scrape per Month:</strong> Unlimited </p>
+                    <p class="my-1 md:my-3"> <strong>Export Option:</strong> All</p>
+                </div>
+                <div class="container max-w-full flex mt-5 justify-center md:mt-8 mb-6">
+                    <a class="hover:cursor-pointer justify-center bg-slate-950 px-6 py-2 md:px-10 rounded-lg text-white font-bold ">Select Plan</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

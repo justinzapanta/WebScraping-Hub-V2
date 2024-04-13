@@ -1,0 +1,45 @@
+{% extends 'user_view/parts/base.html' %}
+{% load static %}
+
+{% block link %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+
+{% block list %}
+<li><a href="{% url 'index' %}" class="hover:cursor-pointer font-bold text-xl">Home</a></li>
+{% endblock %}
+
+{% block content %}
+    <div class="container max-w-full fixed h-screen flex top-0 flex-col justify-center bg-slate-100">
+        <div class="flex justify-center">
+            <div class="container w-10/12 h-80 bg-white border rounded-xl shadow-xl">
+                <h1 class="font-bold text-center text-xl mt-4">Sign In</h1>
+
+                <form class="flex flex-col text-center mt-5">
+                    <div>
+                        <div class="max-w-full flex justify-center">
+                            <div class="w-52 pl-2">
+                                <h1 class="text-start font-bold">Email</h1>
+                            </div>
+                        </div>
+                        <input required id="email" type="email"
+                        class="w-48 h-8 border border-black rounded-md pl-1">
+                    </div>
+                    <div class="mt-5">
+                        <div class="max-w-full flex justify-center">
+                            <div class="w-52 pl-2">
+                                <h1 class="text-start font-bold">Password</h1>
+                            </div>
+                        </div>
+                        <input required id="password" type="password"
+                        class="w-48 h-8 border border-black rounded-md pl-1">
+                    </div>
+                    <div class="container max-w-full items-center mt-5 mb-5">
+                        <button class="bg-black w-32 h-8 font-bold rounded-md text-white">Sign In</button>
+                    </div>
+                    <h1 class="text-sm">Are You New? <a class="font-bold hover:cursor-pointer">Sign Up</a></h1>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

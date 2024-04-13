@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    {% block link %}
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% endblock %}
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+</head>
+<body class="relative">
+    <header class="container max-w-full border-b-2 py-2 sticky bg-white top-0 shadow-sm z-30 md:flex">
+        <h1 class="md:flex-1 md:font-bold text-center md:text-start md:ml-5 font-sans font-bold text-xl md:text-2xl">WebScraping Hub</h1>
+        <a id="menu" class="md:hidden menu-icon text-black absolute top-0 right-0 mt-2 mr-4"><i class="fas fa-regular fa-bars fa-2x"></i></a>
+        <nav class="md:block hidden pr-5 pt-1">
+            <ul>
+                <li><a class="md:font-bold text-xl menu hover:cursor-pointer" href="{% url 'sign-in' %}">Sign In</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    {% block content %}
+
+    {% endblock %}
+
+    
+    <div id="mobile-menu" class="fixed md:hidden hidden top-0 right-0 container shadow-2xl h-screen w-10/12 rounded-l-3xl border z-50 bg-white">
+        <a class="absolute font-bold text-xl top-3 right-4" onclick="close_menu()">X</a>
+        <h1 class="text-2xl font-bold mt-5 text-center">Menu</h1>
+        <ul class="mt-7 ml-3">
+            {% block list %}
+                <li><a href="{% url 'sign-in' %}" class="hover:cursor-pointer font-bold text-xl">Sign In</a></li>
+            {% endblock %}
+        </ul>
+    </div>
+</body>
+    {% block script %}
+    <script>
+        const mobile_menu = document.querySelector('#mobile-menu')
+
+        function close_menu(){
+            mobile_menu.style.display = 'none'
+        }
+
+        document.querySelector('#menu').addEventListener('click', () => {
+            mobile_menu.style.display = 'block'
+        })
+    </script>
+    {% endblock %}
+</html>
