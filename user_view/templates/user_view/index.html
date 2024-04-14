@@ -6,21 +6,23 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container max-w-full relative flex justify-end mt-4 ">
-        <h1 class="absolute top-3 md:top-14 left-5 text-xl font-bold md:text-4xl">Welcom To</h1>
-        <h1 class="absolute top-9 md:top-24 left-5 text-md font-bold md:text-4xl"">WebScraping Hub</h1>
-        <img src="{% static 'img/index-img1.png' %}" class="mt-7 w-9/12 md:w-2/4" alt="image">
-    </div>
-    <div class="text-center mt-4 container max-w-full md:absolute md:top-56">
-        <div class="container max-w-full md:justify-start justify-center md:max-w-none flex pl-5">
-            <div class="text-start">
-                <h1 class="font-bold text-lg md:text-2xl w-72 md:w-auto">Turn Any Website into Your Data Source</h1>
-                <h1 class="font-bold text-md md:text-xl text-sm md:w-11/12 w-72 mt-2 text-ellipsis mb-5">Effortlessly extract valuable insights with our user-friendly web scraping tool </h1>
-            </div>
+    <div class="bg-white">
+        <div class="container max-w-full relative flex justify-end pt-4 ">
+            <h1 class="absolute top-3 md:top-14 left-5 text-xl font-bold md:text-4xl">Welcom To</h1>
+            <h1 class="absolute top-9 md:top-24 left-5 text-md font-bold md:text-4xl"">WebScraping Hub</h1>
+            <img src="{% static 'img/index-img1.png' %}" class="mt-7 w-9/12 md:w-2/4" alt="image">
         </div>
-        <div class="mt-2 md:mt-9 md:text-start md:pl-44">
-            <a href="{% url 'sign-in' %}" class="hover:cursor-pointer mr-2 bg-slate-950 text-white rounded-3xl md:text-xl md:py-2 md:px-14 py-2 px-10">Sign In</a>
-            <a href="#pricing" class="hover:cursor-pointer text-slate-950 font-bold rounded-2xl md:text-xl md:py-3 md:px-16 py-2 px-10">Pricing</a>
+        <div class="text-center mt-4 container max-w-full md:absolute md:top-56">
+            <div class="container max-w-full md:justify-start justify-center md:max-w-none flex pl-5">
+                <div class="text-start">
+                    <h1 class="font-bold text-lg md:text-2xl w-72 md:w-auto">Turn Any Website into Your Data Source</h1>
+                    <h1 class="font-bold text-md md:text-xl text-sm md:w-11/12 w-72 mt-2 text-ellipsis mb-5">Effortlessly extract valuable insights with our user-friendly web scraping tool </h1>
+                </div>
+            </div>
+            <div class="mt-2 md:mt-9 md:text-start md:pl-44">
+                <a href="{% url 'sign-in' %}" class="hover:cursor-pointer mr-2 bg-slate-950 text-white rounded-3xl md:text-xl md:py-2 md:px-14 py-2 px-10">Sign In</a>
+                <a href="#pricing" class="hover:cursor-pointer text-slate-950 font-bold rounded-2xl md:text-xl md:py-3 md:px-16 py-2 px-10">Pricing</a>
+            </div>
         </div>
     </div>
 

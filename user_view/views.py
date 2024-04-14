@@ -4,12 +4,22 @@ from django.contrib.auth import authenticate, login, logout
 # Create your views here.
 
 def index(request):
+    if request.user.is_authenticated:
+        return redirect('home')
+    
     return render(request, 'user_view/index.html')
+
+
+def home(request):
+    return render(request, 'user_view/home_page/home_page.html')
 
 
 
 def sign_in(request):
     data = {'notif' : ''}
+
+    if request.user.is_authenticated:
+        return redirect('home')
 
     if request.method == 'POST':
         user = authenticate(
@@ -19,7 +29,7 @@ def sign_in(request):
 
         if user:
             login(request, user)
-            return redirect('index') 
+            return redirect('home') 
         
         data['notif'] = 'Invalid Email or Password'
 
@@ -30,6 +40,9 @@ def sign_in(request):
 def sign_up(request):
     data = {'notif' : ''}
 
+    if request.user.is_authenticated:
+        return redirect('home')
+    
     if request.method == 'POST':
         user = User.objects.filter(
             username=request.POST['email']
@@ -46,3 +59,14 @@ def sign_up(request):
 
         data['notif'] = 'Email Already Exists'
     return render(request, 'user_view/authentication/sign_up.html', data)
+
+
+
+def sign_out(request):
+    if request.user.is_authenticated:
+        logout(request)
+    return redirect('index')
+    
+
+def scan(request):
+    return render(request, 'user_view/home_page/webscrape.html')

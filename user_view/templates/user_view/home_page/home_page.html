@@ -1,0 +1,111 @@
+{% extends 'user_view/parts/base.html' %}
+{% load static %}
+
+{% block link %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+
+
+{% block nav_link %}
+<li><a class="md:font-bold text-xl menu hover:cursor-pointer" href="{% url 'sign-out' %}">Sign Out</a></li>
+{% endblock %}
+
+{% block list %}
+<li><a href="{% url 'sign-out' %}" class="hover:cursor-pointer font-bold text-xl">Sign Out</a></li>
+{% endblock %}
+
+
+{% block content %}
+    <div class="container max-w-full flex h-screen bg-slate-100 ">
+        <div class="container relative hidden md:block w-80 rounded-r-2xl border-r border-gray-300 h-screen bg-white shadow-xl">
+            <ul class="absolute right-4 mt-14 text-end text-md font-bold">
+                <li><a href="#">API</a></li>
+                <li class="my-2"><a href="#">The Data You Got</a></li>
+                <li class="mb-2"><a href="#">Share With Team</a></li>
+                <li><a href="#">Documentation</a></li>
+            </ul>
+        </div>
+        <div class="container max-w-full h-screen relative">
+            <h1 class="text-lg font-bold mt-5 ml-2">Your Scans</h1>
+            <div class="container max-w-full flex justify-center md:justify-normal md:pl-5">
+                <div class="flex flex-col md:flex-row md:flex-wrap">
+
+                    <div onclick="open_modal()" class="mb-5 md:mr-5 container w-60 bg-white rounded-2xl mt-4 pt-8 pb-5 shadow-xl project-card">
+                        <h2 class="text-center font-bold">Scan New Website</h2>
+                        <ul class="pl-2">
+                            <div class="container max-w-full flex justify-center mt-2">
+                                <a class="bg-slate-950 text-center text-white rounded-lg py-1.5 px-14 hover:cursor-pointer">Create</a>
+                            </div>
+                        </ul>
+                    </div>
+
+                    <div class="mb-5 md:mr-5 container w-60 bg-white rounded-2xl mt-4 pt-2 pb-5 shadow-xl project-card">
+                        <h2 class="text-center font-bold">Webscrape site</h2>
+                        <ul class="pl-2 mt-4">
+                            <li class="mt-2"><h3 class="text-sm">Auto Run Every: 5h</h3></li>
+                            <li class="my-2"><h3 class="text-sm">Data You Get: 100 Data</h3></li>
+                        </ul>
+                        <div class="container max-w-full flex justify-center mt-7">
+                            <a href="/scan/" class="bg-slate-950 text-center text-white rounded-lg py-1.5 px-14">Edit</a>
+                        </div>
+                    </div>
+
+                    <div class="mb-5 md:mr-5 container w-60 bg-white rounded-2xl mt-4 pt-2 pb-5 shadow-xl project-card">
+                        <h2 class="text-center font-bold">Webscrape site</h2>
+                        <ul class="pl-2 mt-4">
+                            <li class="mt-2"><h3 class="text-sm">Auto Run Every: 24h</h3></li>
+                            <li class="my-2"><h3 class="text-sm">Data You Get: 100 Data</h3></li>
+                        </ul>
+                        <div class="container max-w-full flex justify-center mt-7">
+                            <a href="/home/" class="bg-slate-950 text-center text-white rounded-lg py-1.5 px-14">Edit</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="create-modeal" class="hidden">
+                <div class="fixed container max-w-full top-0 h-screen flex flex-col justify-center" style="background-color: rgba(0, 0, 0, 0.473);">
+                    <div class="flex justify-center ">
+                        <div class="bg-white container w-10/12 md:w-5/12 rounded-2xl relative md:absolute md:top-40 md:left-48">
+                            <a class="font-bold text-lg absolute right-4 mt-4 hover:cursor-pointer" onclick="close_modal()">X</a>
+                            <form class="container flex justify-center mt-10" action="">
+                                <div class="flex flex-col">
+                                    <div class="flex flex-col w-56 md:w-72">
+                                        <div>
+                                            <label for="">Name:</label>
+                                        </div>
+                                        <input class="border pl-1 h-8 md:h-9 border-black rounded-md" type="text">
+                                    </div>
+        
+                                    <div class="flex flex-col mt-4">
+                                        <div>
+                                            <label for="">Website URL:</label>
+                                        </div>
+                                        <input class="border pl-1 h-8 border-black rounded-md" type="text">
+                                    </div>
+
+                                    <div class="flex justify-center my-7">
+                                        <button class="w-36 font-bold rounded-xl h-10 bg-slate-950 text-white">Start Scan</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        const modal_create = document.querySelector('#create-modeal')
+        function close_modal(){
+            modal_create.style.display = 'none'
+        }
+
+        function open_modal(){
+            modal_create.style.display = 'block'
+        }
+    </script>
+{% endblock %}
