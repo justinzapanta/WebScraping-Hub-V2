@@ -30,62 +30,58 @@
             <div class="container max-w-full flex justify-center md:justify-normal md:pl-5">
                 <div class="flex flex-col md:flex-row md:flex-wrap">
 
-                    <div onclick="open_modal()" class="mb-5 md:mr-5 container w-60 bg-white rounded-2xl mt-4 pt-8 pb-5 shadow-xl project-card">
-                        <h2 class="text-center font-bold">Scan New Website</h2>
+                    <div  class=" mb-5 md:mr-5 container w-60 bg-white rounded-2xl mt-4 pt-8 pb-5 shadow-xl project-card">
+                        <h2 class="text-center font-bold">Scrape New Website</h2>
                         <ul class="pl-2">
                             <div class="container max-w-full flex justify-center mt-2">
-                                <a class="bg-slate-950 text-center text-white rounded-lg py-1.5 px-14 hover:cursor-pointer">Create</a>
+                                <a onclick="open_modal()" class="bg-slate-950 text-center text-white rounded-lg py-1.5 px-14 hover:cursor-pointer">Create</a>
                             </div>
                         </ul>
                     </div>
 
-                    <div class="mb-5 md:mr-5 container w-60 bg-white rounded-2xl mt-4 pt-2 pb-5 shadow-xl project-card">
-                        <h2 class="text-center font-bold">Webscrape site</h2>
-                        <ul class="pl-2 mt-4">
-                            <li class="mt-2"><h3 class="text-sm">Auto Run Every: 5h</h3></li>
-                            <li class="my-2"><h3 class="text-sm">Data You Get: 100 Data</h3></li>
-                        </ul>
-                        <div class="container max-w-full flex justify-center mt-7">
-                            <a href="/scan/" class="bg-slate-950 text-center text-white rounded-lg py-1.5 px-14">Edit</a>
+                    {% for project in projects %} 
+                        <div class="mb-5 md:mr-5 container w-60 bg-white rounded-2xl mt-4 pt-2 pb-5 shadow-2xl project-card">
+                            <h2 class="text-center font-bold">{{project.project_name}}</h2>
+                            <ul class="pl-2 mt-4">
+                                <li class="mt-2"><h3 class="text-sm">Auto Run Every: {{project.auto_run}}h</h3></li>
+                                <li class="my-2"><h3 class="text-sm">Data You Get: {{project.total_data}} Data</h3></li>
+                                <li"><h3 class="text-sm">url: {{project.website_link_title}}...</h3></li>
+                            </ul>
+                            <div class="container max-w-full flex justify-center mt-7">
+                                <a href="/scan/" class="bg-slate-950 text-center text-white rounded-lg py-1.5 px-10">Scrape Now</a>
+                            </div>
                         </div>
-                    </div>
+                    {% endfor %}
 
-                    <div class="mb-5 md:mr-5 container w-60 bg-white rounded-2xl mt-4 pt-2 pb-5 shadow-xl project-card">
-                        <h2 class="text-center font-bold">Webscrape site</h2>
-                        <ul class="pl-2 mt-4">
-                            <li class="mt-2"><h3 class="text-sm">Auto Run Every: 24h</h3></li>
-                            <li class="my-2"><h3 class="text-sm">Data You Get: 100 Data</h3></li>
-                        </ul>
-                        <div class="container max-w-full flex justify-center mt-7">
-                            <a href="/home/" class="bg-slate-950 text-center text-white rounded-lg py-1.5 px-14">Edit</a>
-                        </div>
-                    </div>
                 </div>
             </div>
 
+            <!--Create new PROJECT MODAL-->
             <div id="create-modeal" class="hidden">
                 <div class="fixed container max-w-full top-0 h-screen flex flex-col justify-center" style="background-color: rgba(0, 0, 0, 0.473);">
                     <div class="flex justify-center ">
                         <div class="bg-white container w-10/12 md:w-5/12 rounded-2xl relative md:absolute md:top-40 md:left-48">
                             <a class="font-bold text-lg absolute right-4 mt-4 hover:cursor-pointer" onclick="close_modal()">X</a>
-                            <form class="container flex justify-center mt-10" action="">
+                            <form id="create-project-form" class="container flex justify-center mt-10">
                                 <div class="flex flex-col">
+                                    {% csrf_token %}
+                                    <h1 id="notif" class="text-center text-wrap w-52 text-red-400 mb-3">{{notif}}</h1>
                                     <div class="flex flex-col w-56 md:w-72">
                                         <div>
-                                            <label for="">Name:</label>
+                                            <label for="">Project Name:</label>
                                         </div>
-                                        <input class="border pl-1 h-8 md:h-9 border-black rounded-md" type="text">
+                                        <input id="project-name" required class="border pl-1 h-8 md:h-9 border-black rounded-md" name="project-name" type="text">
                                     </div>
         
                                     <div class="flex flex-col mt-4">
                                         <div>
                                             <label for="">Website URL:</label>
                                         </div>
-                                        <input class="border pl-1 h-8 border-black rounded-md" type="text">
+                                        <input id="website-url" required class="border pl-1 h-8 border-black rounded-md" type="text">
                                     </div>
 
                                     <div class="flex justify-center my-7">
-                                        <button class="w-36 font-bold rounded-xl h-10 bg-slate-950 text-white">Start Scan</button>
+                                        <button class="w-36 font-bold rounded-xl h-10 bg-slate-950 text-white">Create Now</button>
                                     </div>
                                 </div>
                             </form>
@@ -100,6 +96,9 @@
 {% block script %}
     <script>
         const modal_create = document.querySelector('#create-modeal')
+        const create_form = document.querySelector('#create-form')
+        const create_project = document.querySelector('#create-project-form')
+
         function close_modal(){
             modal_create.style.display = 'none'
         }
@@ -107,5 +106,38 @@
         function open_modal(){
             modal_create.style.display = 'block'
         }
+
+        const notif = document.querySelector('#notif')
+        const project_name_input = document.querySelector('#project-name')
+        const website_url_input = document.querySelector('#website-url')
+
+        create_project.addEventListener('submit', (event) => {
+            event.preventDefault()
+            const url = String(website_url_input.value)
+
+            if (!(url.includes('user')) && !(url.includes('admin')) && !(url.includes('dashboard'))){
+                if (url.includes('http://') || url.includes('https://')){
+                const request  = new XMLHttpRequest
+                request.open('POST', '/api/project/create-project/')
+                request.setRequestHeader('Content-Type', 'application/json')
+                request.send(JSON.stringify({
+                    'project-name' : project_name_input.value,
+                    'website-url' : url
+                }))
+                
+                request.onloadend = () => {
+                    if (request.status == 200){
+                        create_project.submit()
+                    }
+                    const response = JSON.parse(request.responseText)
+                    notif.textContent = response.message
+                }
+                }else{
+                    notif.textContent = 'Make sure the URL are correct'
+                }
+            }else{
+                notif.textContent = `Sorry, this page may not be scrapeable. If it's your site or allowed, reach out. Thanks`
+            }
+        })
     </script>
 {% endblock %}

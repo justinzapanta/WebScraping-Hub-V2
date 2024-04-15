@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .backend import project_backend
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -7,5 +8,8 @@ urlpatterns = [
     path('sign-up/', views.sign_up, name='sign-up'),
     path('sign-out/', views.sign_out, name='sign-out'),
     path('home/', views.home, name='home'),
-    path('scan/', views.scan, name='scan')
+    path('scan/', views.scan, name='scan'),
+
+    #project endpoint
+    path('api/project/create-project/', project_backend.create_project)
 ]

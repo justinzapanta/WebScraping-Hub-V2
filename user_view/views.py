@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from .models import User_Project
 # Create your views here.
 
 def index(request):
@@ -11,7 +12,10 @@ def index(request):
 
 
 def home(request):
-    return render(request, 'user_view/home_page/home_page.html')
+    if request.user.is_authenticated:
+        user_projects = User_Project.objects.filter(user_info=request.user)
+        return render(request, 'user_view/home_page/home_page.html', {'projects' : user_projects})
+    return redirect('index')
 
 
 
