@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from .models import User_Project
+from bs4 import BeautifulSoup
+import requests
 # Create your views here.
 
 def index(request):
@@ -72,5 +74,31 @@ def sign_out(request):
     return redirect('index')
     
 
-def scan(request):
-    return render(request, 'user_view/home_page/webscrape.html')
+def scan(request, project_name):
+    project = User_Project.objects.filter(
+        user_info=request.user,
+        project_name=project_name
+    )
+    
+    if project:
+        data = {}
+        data['link'] = project[0].website_link
+
+        if 'project' not in request.session or request.session['project']['project_name'] != project_name:
+            website_html = requests.get(project[0].website_link).text
+            request.session['project'] = {
+                'project_name' : project_name,
+                'html' : website_html
+            }
+
+        if request.method == 'POST':
+            if request.POST['get']:
+                html = request.session['project']['html']
+                soup = BeautifulSoup(html, 'lxml')
+                filter_ = soup.find_all(request.POST['tag'])
+                
+                data['tag'] = request.POST['tag']
+                data['results'] = filter_
+        
+        return render(request, 'user_view/home_page/webscrape.html', data)
+    return redirect('home')

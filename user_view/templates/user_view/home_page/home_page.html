@@ -26,7 +26,7 @@
             </ul>
         </div>
         <div class="container max-w-full h-screen relative">
-            <h1 class="text-lg font-bold mt-5 ml-2">Your Scans</h1>
+            <h1 class="text-lg font-bold mt-5 ml-2">Your Project</h1>
             <div class="container max-w-full flex justify-center md:justify-normal md:pl-5">
                 <div class="flex flex-col md:flex-row md:flex-wrap">
 
@@ -43,12 +43,16 @@
                         <div class="mb-5 md:mr-5 container w-60 bg-white rounded-2xl mt-4 pt-2 pb-5 shadow-2xl project-card">
                             <h2 class="text-center font-bold">{{project.project_name}}</h2>
                             <ul class="pl-2 mt-4">
-                                <li class="mt-2"><h3 class="text-sm">Auto Run Every: {{project.auto_run}}h</h3></li>
-                                <li class="my-2"><h3 class="text-sm">Data You Get: {{project.total_data}} Data</h3></li>
-                                <li"><h3 class="text-sm">url: {{project.website_link_title}}...</h3></li>
+                                {% if project.auto_run %}
+                                    <li class="mt-2"><h3 class="text-sm">Automatic scraping is: {{project.auto_run}}h</h3></li>
+                                {% else %}
+                                    <li class="mt-2"><h3 class="text-sm">Automatic scraping is: Off</h3></li>
+                                {% endif %}
+                                <li class="my-2"><h3 class="text-sm">{{project.total_data}} results retrieved</h3></li>
+                                <li"><h3 class="text-sm truncate ">url: {{project.website_link}}</h3></li>
                             </ul>
                             <div class="container max-w-full flex justify-center mt-7">
-                                <a href="/scan/" class="bg-slate-950 text-center text-white rounded-lg py-1.5 px-10">Scrape Now</a>
+                                <a href="/scan/{{project.project_name}}" class="bg-slate-950 text-center text-white rounded-lg py-1.5 px-10">Scrape Now</a>
                             </div>
                         </div>
                     {% endfor %}

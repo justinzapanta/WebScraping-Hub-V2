@@ -13,16 +13,11 @@ def create_project(request):
                 project_name=data['project-name']
             )
             
-            link_title = data['website-url']
             if not project:
-                if len(str(data['website-url'])) > 29:
-                    link_title = data['website-url'][0:29]
-
                 new_project = User_Project(
                     user_info=request.user,
                     project_name=data['project-name'],
                     website_link=data['website-url'],
-                    website_link_title=link_title
                 )
                 new_project.save()
                 return JsonResponse({'message' : 'success'}, status=200)
