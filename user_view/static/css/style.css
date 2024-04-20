@@ -677,10 +677,6 @@ video {
   margin-left: 0.75rem;
 }
 
-.ml-5 {
-  margin-left: 1.25rem;
-}
-
 .mr-2 {
   margin-right: 0.5rem;
 }
@@ -721,23 +717,12 @@ video {
   margin-top: 1.75rem;
 }
 
-.line-clamp-3 {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-}
-
 .block {
   display: block;
 }
 
 .flex {
   display: flex;
-}
-
-.table {
-  display: table;
 }
 
 .hidden {
@@ -748,6 +733,10 @@ video {
   height: 2.5rem;
 }
 
+.h-7 {
+  height: 1.75rem;
+}
+
 .h-8 {
   height: 2rem;
 }
@@ -756,16 +745,12 @@ video {
   height: 2.25rem;
 }
 
-.h-screen {
-  height: 100vh;
-}
-
 .h-96 {
   height: 24rem;
 }
 
-.max-h-full {
-  max-height: 100%;
+.h-screen {
+  height: 100vh;
 }
 
 .w-10\/12 {
@@ -774,6 +759,10 @@ video {
 
 .w-16 {
   width: 4rem;
+}
+
+.w-24 {
+  width: 6rem;
 }
 
 .w-32 {
@@ -812,78 +801,6 @@ video {
   width: 75%;
 }
 
-.w-full {
-  width: 100%;
-}
-
-.w-1\/2 {
-  width: 50%;
-}
-
-.w-4\/5 {
-  width: 80%;
-}
-
-.w-6\/12 {
-  width: 50%;
-}
-
-.w-2\/3 {
-  width: 66.666667%;
-}
-
-.w-2\/12 {
-  width: 16.666667%;
-}
-
-.w-2\/5 {
-  width: 40%;
-}
-
-.w-2\/6 {
-  width: 33.333333%;
-}
-
-.w-3\/5 {
-  width: 60%;
-}
-
-.w-3\/12 {
-  width: 25%;
-}
-
-.w-5\/6 {
-  width: 83.333333%;
-}
-
-.w-1\/12 {
-  width: 8.333333%;
-}
-
-.w-24 {
-  width: 6rem;
-}
-
-.w-14 {
-  width: 3.5rem;
-}
-
-.w-12 {
-  width: 3rem;
-}
-
-.w-8 {
-  width: 2rem;
-}
-
-.w-2 {
-  width: 0.5rem;
-}
-
-.w-40 {
-  width: 10rem;
-}
-
 .max-w-full {
   max-width: 100%;
 }
@@ -912,14 +829,6 @@ video {
   overflow: auto;
 }
 
-.overflow-x-auto {
-  overflow-x: auto;
-}
-
-.overflow-y-auto {
-  overflow-y: auto;
-}
-
 .truncate {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -928,10 +837,6 @@ video {
 
 .text-ellipsis {
   text-overflow: ellipsis;
-}
-
-.text-clip {
-  text-overflow: clip;
 }
 
 .text-wrap {
@@ -976,14 +881,13 @@ video {
   border-width: 1px;
 }
 
-.border-x-2 {
-  border-left-width: 2px;
-  border-right-width: 2px;
-}
-
 .border-x {
   border-left-width: 1px;
   border-right-width: 1px;
+}
+
+.border-b {
+  border-bottom-width: 1px;
 }
 
 .border-b-2 {
@@ -992,10 +896,6 @@ video {
 
 .border-r {
   border-right-width: 1px;
-}
-
-.border-b {
-  border-bottom-width: 1px;
 }
 
 .border-black {
@@ -1355,14 +1255,6 @@ video {
 
   .md\:justify-center {
     justify-content: center;
-  }
-
-  .md\:overflow-hidden {
-    overflow: hidden;
-  }
-
-  .md\:overflow-ellipsis {
-    text-overflow: ellipsis;
   }
 
   .md\:px-10 {

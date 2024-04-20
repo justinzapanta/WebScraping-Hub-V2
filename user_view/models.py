@@ -22,6 +22,6 @@ class User_Project_Process(models.Model):
     step = models.AutoField(primary_key=True)
     user_project_info = models.ForeignKey(User_Project, on_delete=models.CASCADE)
     tag_name = models.CharField(max_length=200, default=None)
-    get_by = models.CharField(max_length=200, default=None)
-    attribute_name = models.CharField(max_length=200, default=None)
+    get_by = models.CharField(max_length=200, default='')
+    attribute_name = models.CharField(max_length=200, default='')
     

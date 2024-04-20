@@ -23,13 +23,13 @@
         <form method="POST" class="flex flex-col justify-center mt-4">
             {% csrf_token %}
             <div class="flex justify-center">
-                <div class="mr-3">
-                    <label for="">Tag:</label>
-                    <input name="tag" required type="text" class="border border-black w-32 pl-1 rounded-md">
+                <div class="mr-3 ">
+                    <label class="" for="">Tag:</label>
+                    <input name="tag" required type="text" class="border h-7 border-black w-32 pl-1 rounded-md">
                 </div>
                 <div>
                     <label for="get">Get By:</label>
-                    <select onchange="select()" name="get" id="selection" class="border border-black w-16 rounded-md">
+                    <select onchange="select()" name="selection" id="selection" class="border h-7 border-black w-16 rounded-md">
                         <option value="all">All</option>
                         <option value="class">Class</option>
                         <option value="id">ID</option>
@@ -40,7 +40,7 @@
                 <div class="flex justify-center mt-5">
                     <div>
                         <label id="name" for="">Class Name:</label>
-                        <input type="text" class="border border-black w-36 pl-1 rounded-md">
+                        <input name="attribute-name" id="attribute-name-input" required value=" " type="text" class="border  h-7 border-black w-36 pl-1 rounded-md">
                     </div>
                 </div>
             </div>
@@ -50,33 +50,52 @@
         </form>
         
         <div class="container max-w-full mt-5 pl-2 font-bold">
-            <h1>Steps</h1>
+            <h1> You are at</h1>
             <div class="container max-w-full flex flex-wrap mt-2">
-                <div class="py-2 px-2 bg-slate-100 shadow-lg rounded-md flex">
-                    {% if tag %}
-                        <h3 class="text-sm">tag: {{tag}}</h3>
+                {% if tag %}
+                    {% if attribute %}
+                        <div class="py-2 px-2 bg-slate-100 mb-3 shadow-lg rounded-md flex">
+                            <h3 class="text-sm">< {{tag}} {{attribute.attribute}}="{{attribute.name}}" ></h3>
+                            <a onclick="remove_data()" class="mr-3 ml-3 text-sm text-red-500 hover:cursor-pointer">X</a>
+                        </div>
                     {% else %}
-                        <h3 class="text-sm">tag: None</h3>
+                        <div class="py-2 px-2 bg-slate-100 shadow-lg rounded-md flex">
+                            <h3 class="text-sm">< {{tag}}  ></h3>
+                            <a onclick="remove_data()" class="mr-3 ml-3 text-sm text-red-500 hover:cursor-pointer">X</a>
+                        </div>
                     {% endif %}
-                    <a class="mr-3 ml-3 text-sm text-red-500 hover:cursor-pointer">X</a>
+                {% else %}
+                    <div class="py-2 px-2 bg-slate-100 shadow-lg rounded-md flex">
+                        <html class="text-sm">< html > </h3>
+                    </div>
+                {% endif %}
+            </div>  
+        </div>
+
+        
+        <!--THE DATA WILL DISPLAY HERE-->
+        <div class="flex justify-center pb-14">
+            <div class="container max-w-screen px-4 mt-5 mb-5">
+                <!--Search-->
+                <form method="GET" class="flex justify-end mb-3">
+                    <button class="bg-slate-950 text-white w-24 h-7 text-sm rounded-lg font-bold mr-2">SEARCH</button>
+                    <input id="search" name="search" type="text" class="border-black rounded-md border">
+                </form>
+                <div class="border border-black">
+                    <h1 class="text-center text-md font-bold py-1">Result</h1>
+                </div> 
+                <div class="container max-w-screen h-96 overflow-auto">
+                    <div>
+                        {% for result in results %}
+                            <div class="border-x border-b border-black px-1">
+                                <p class="text-left text-balance text-sm">{{result}}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="container max-w-screen px-4 mt-5">
-            <div class="border border-black">
-                <h1 class="text-center text-md font-bold py-1">Data</h1>
-            </div>
-            <div class="container max-w-screen h-96 overflow-auto md:overflow-hidden">
-                {% for result in results %}
-                    {% if result %}
-                        <div class="border-x border-b border-black px-1">
-                            <p class="text-left text-balance text-sm">{{result}}</p>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        </div>
 
     </div>
 {% endblock %}
@@ -86,13 +105,27 @@
         const name_input = document.querySelector('#attribute-name')
         const selected_value = document.querySelector('#selection')
         const attribute = document.querySelector('#name')
+        const attribute_name_input = document.querySelector('#attribute-name-input')
 
         function select(){
             if (selected_value.value != 'all'){
                 attribute.textContent = `${String(selected_value.value).toUpperCase()} NAME: `
                 name_input.style.display = 'block'
+                attribute_name_input.value = ''
             }else{
                 name_input.style.display = 'none'
+                attribute_name_input.value = ' '
+            }
+        }
+
+        function remove_data(){
+            const request = new XMLHttpRequest
+            request.open('POST', '/api/scrape/delete-step/')
+            request.setRequestHeader('Content-Type', 'application/json')
+            request.send()
+
+            request.onloadend = () => {
+                window.location.reload()
             }
         }
     </script>
