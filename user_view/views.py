@@ -5,6 +5,7 @@ from .models import User_Project, User_Project_Process
 from bs4 import BeautifulSoup
 from .scrape import Scrape, clean, request_data_from_link
 import requests
+import time
 # Create your views here.
 
 def index(request):
@@ -83,13 +84,11 @@ def scan(request, project_name):
         data['link'] = project[0].website_link
         request.session['user_project'] = project[0].project_name
 
-
         if project:
             process = User_Project_Process.objects.filter(user_project_info=project[0])
             html = request_data_from_link(request, project)
             scrape = Scrape( html=html, project=project[0])
             
-
             if request.method == 'POST':
                 if not process:
                     selection = request.POST['selection']
@@ -102,25 +101,30 @@ def scan(request, project_name):
                                 request.POST['attribute-name'],
                                 save=True
                             )
+                else:
+                    pass
+                process = User_Project_Process.objects.filter(user_project_info=project[0])
                         
             #check if the process have steps then display the result
             _filter = ''
             if process:
-                for step in process:
-                    if step.get_by == '':
-                        _filter = scrape.find_tag(step.tag_name)
-                    else:
-                        _filter = scrape.find_with_attribute(
-                                step.tag_name,
-                                step.get_by,
-                                step.attribute_name,
-                            )
-                        
-                        data['attribute'] = {'attribute' : step.get_by, 'name' : step.attribute_name}
-                    data['tag'] = step.tag_name
+                print(len(process))
+                process = process[0]
+                if process.get_by == '':
+                    _filter = scrape.find_tag(process.tag_name)
+                else:
+                    _filter = scrape.find_with_attribute(
+                            process.tag_name,
+                            process.get_by,
+                            process.attribute_name,
+                        )
+                
 
 
-                            
+                #i'l remove this later then make it list so that i can display each location
+                    data['attribute'] = {'attribute' : process.get_by, 'name' : process.attribute_name}
+                data['tag'] = process.tag_name
+
         _filter = clean(_filter)
         if request.method == 'GET':
             if 'search' in request.GET:

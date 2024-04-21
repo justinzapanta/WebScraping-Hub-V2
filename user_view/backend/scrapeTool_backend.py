@@ -1,4 +1,5 @@
 from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from ..models import User_Project_Process, User_Project
@@ -6,7 +7,7 @@ import json
 
 @csrf_exempt
 def delete_step(request):
-    if request.method == 'POST':
+    if request.method == 'DELETE':
         project = User_Project.objects.get(
                 user_info=request.user, 
                 project_name=request.session['user_project']

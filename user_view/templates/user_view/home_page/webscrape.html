@@ -120,12 +120,12 @@
 
         function remove_data(){
             const request = new XMLHttpRequest
-            request.open('POST', '/api/scrape/delete-step/')
+            request.open('DELETE', '/api/scrape/delete-step/')
             request.setRequestHeader('Content-Type', 'application/json')
             request.send()
 
             request.onloadend = () => {
-                window.location.reload()
+                window.location.href = '/scan/Countries'
             }
         }
     </script>
