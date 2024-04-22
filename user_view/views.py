@@ -90,52 +90,68 @@ def scan(request, project_name):
             scrape = Scrape( html=html, project=project[0])
             
             if request.method == 'POST':
-                if not process:
-                    selection = request.POST['selection']
-                    if selection == 'all':
-                        scrape.find_tag(request.POST['tag'], save=True)
-                    else:
-                        scrape.find_with_attribute(
-                                request.POST['tag'],
-                                selection,
-                                request.POST['attribute-name'],
-                                save=True
-                            )
+                selection = request.POST['selection']
+                if selection == 'all':
+                    scrape.find_tag(request.POST['tag'], selection, save=True)
                 else:
-                    pass
+                    scrape.find_with_attribute(
+                            request.POST['tag'],
+                            selection,
+                            request.POST['attribute-name'],
+                            save=True
+                        )
+                    
                 process = User_Project_Process.objects.filter(user_project_info=project[0])
                         
             #check if the process have steps then display the result
             _filter = ''
             if process:
-                print(len(process))
-                process = process[0]
-                if process.get_by == '':
-                    _filter = scrape.find_tag(process.tag_name)
+                step = process[0]
+                if step.get_by == '':
+                    _filter = scrape.find_tag(step.tag_name)
                 else:
                     _filter = scrape.find_with_attribute(
-                            process.tag_name,
-                            process.get_by,
-                            process.attribute_name,
+                            step.tag_name,
+                            step.get_by,
+                            step.attribute_name,
                         )
                 
-
-
                 #i'l remove this later then make it list so that i can display each location
-                    data['attribute'] = {'attribute' : process.get_by, 'name' : process.attribute_name}
-                data['tag'] = process.tag_name
+                    data['attribute'] = {'attribute' : step.get_by, 'name' : step.attribute_name}
+                data['tag'] = step.tag_name
+            
+            #filter all the data inside the process database
+            temp_list = []
+            if len(process) > 1:
+                for num, step in enumerate(process):
+                    if num != 0:
+                        for dataa in _filter:
+                            if step.get_by == 'all':
+                                temp_list.append(dataa.find_all(step.tag_name))
+                            else:
+                                temp_list.append(dataa.find_all(
+                                        step.tag_name,
+                                        step.get_by,
+                                        step.attribute_name,
+                                    )
+                                )
+                                
+                        _filter = temp_list
 
-        _filter = clean(_filter)
-        if request.method == 'GET':
-            if 'search' in request.GET:
-                temp_list = []
+            if f'{type(_filter)}' != "<class 'list'>":
+                _filter = clean(_filter)
 
-                for datas in _filter:
-                    for value in datas:
-                        if request.GET['search'] in str(value):
-                            temp_list.append(datas)
-                            break
-                _filter = temp_list
+            if request.method == 'GET':
+                if 'search' in request.GET:
+                    temp_list = []
+
+                    for datas in _filter:
+                        for value in datas:
+                            if request.GET['search'].lower() in str(value).lower():
+                                temp_list.append(datas)
+                                break
+                    _filter = temp_list
+                    data['search'] = request.GET['search']
 
         data['results'] = _filter
         return render(request, 'user_view/home_page/webscrape.html', data)

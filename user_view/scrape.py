@@ -36,11 +36,12 @@ class Scrape():
         self.bs4 = BeautifulSoup(html, 'lxml') 
     
 
-    def find_tag(self, tag, save=False):
+    def find_tag(self, tag, selection, save=False):
         if save:
             filter_process = User_Project_Process(
                     user_project_info=self.project,
                     tag_name=tag,
+                    get_by=selection
                 )
             filter_process.save()
         return self.bs4.find_all(tag)
